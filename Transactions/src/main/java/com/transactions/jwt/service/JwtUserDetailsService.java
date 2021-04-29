@@ -1,6 +1,8 @@
 package com.transactions.jwt.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,10 +33,22 @@ public class JwtUserDetailsService implements UserDetailsService {
 				new ArrayList<>());
 	}
 
-	public UserDao save(UserDto user) {
+	public ResponseEntity<?> save(UserDto user) {
+		
+		UserDao check = userDao.findByUsername(user.getUsername());
 		UserDao newUser = new UserDao();
-		newUser.setUsername(user.getUsername());
-		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		return userDao.save(newUser);
+		if (check != null) {
+			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exits");
+		}
+		else
+		{			
+			newUser.setUsername(user.getUsername());
+			newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+			newUser.setfName(user.getfName());
+			newUser.setlName(user.getlName());
+			newUser.setEmail(user.getEmail());
+		}
+		
+		return ResponseEntity.ok(userDao.save(newUser));
 	}
 }

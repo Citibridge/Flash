@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class transactionDto {
 
 	private String transactionRef;
-	
+	private String username;
 	@JsonFormat(pattern = "dd-mm-yyyy")
 	private Date value_Date;
 	private String payerName;
@@ -18,6 +18,24 @@ public class transactionDto {
 	private String payeeAccount;
 	private double amount; 
 	private boolean feedStatus;
+	
+	public transactionDto() {
+		
+	}
+	
+	public transactionDto(String transactionRef, String username, Date value_Date, String payerName,
+			String payerAccount, String payeeName, String payeeAccount, double amount, boolean feedStatus) {
+		super();
+		this.transactionRef = transactionRef;
+		this.username = username;
+		this.value_Date = value_Date;
+		this.payerName = payerName;
+		this.payerAccount = payerAccount;
+		this.payeeName = payeeName;
+		this.payeeAccount = payeeAccount;
+		this.amount = amount;
+		this.feedStatus = feedStatus;
+	}
 	public String getTransactionRef() {
 		return transactionRef;
 	}
@@ -65,6 +83,12 @@ public class transactionDto {
 	}
 	public void setFeedStatus(boolean feedStatus) {
 		this.feedStatus = feedStatus;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	

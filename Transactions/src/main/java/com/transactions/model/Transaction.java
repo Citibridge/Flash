@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -21,19 +22,39 @@ public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long ID;
-	
 	@Column
 	private String transactionRef;
+	private String username;
 	
 	@DateTimeFormat(pattern = "dd-mm-yyyy")
-	private Date Value_Date;
+	private Date value_Date;
 	private String payerName;
+	@JsonIgnore
 	private String payerAccount;
 	private String payeeName; 
+	@JsonIgnore
 	private String payeeAccount;
 	private double amount; 
 	private boolean feedStatus;
 	
+	
+	public Transaction() {
+		
+	}
+	
+	public Transaction(String transactionRef, String username, Date value_Date, String payerName,
+			String payerAccount, String payeeName, String payeeAccount, double amount, boolean feedStatus) {
+		super();
+		this.transactionRef = transactionRef;
+		this.username = username;
+		this.value_Date = value_Date;
+		this.payerName = payerName;
+		this.payerAccount = payerAccount;
+		this.payeeName = payeeName;
+		this.payeeAccount = payeeAccount;
+		this.amount = amount;
+		this.feedStatus = feedStatus;
+	}
 
 	public boolean isFeedStatus() {
 		return feedStatus;
@@ -53,11 +74,11 @@ public class Transaction {
 
 	@JsonFormat(pattern = "dd-mm-yyyy")
 	public Date getValue_Date() {
-		return Value_Date;
+		return value_Date;
 	}
 
 	public void setValue_Date(Date Value_Date) {
-		this.Value_Date = Value_Date;
+		this.value_Date = Value_Date;
 	}
 
 	
@@ -102,11 +123,20 @@ public class Transaction {
 		this.amount = amount;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
-		return "Transaction [ID=" + ID + ", transactionRef=" + transactionRef + ", Value_Date=" + Value_Date
-				+ ", payerName=" + payerName + ", payerAccount=" + payerAccount + ", payeeName=" + payeeName
-				+ ", payeeAccount=" + payeeAccount + ", amount=" + amount + ", feedStatus=" + feedStatus + "]";
+		return "Transaction [ID=" + ID + ", transactionRef=" + transactionRef + ", username=" + username
+				+ ", value_Date=" + value_Date + ", payerName=" + payerName + ", payerAccount=" + payerAccount
+				+ ", payeeName=" + payeeName + ", payeeAccount=" + payeeAccount + ", amount=" + amount + ", feedStatus="
+				+ feedStatus+"]";
 	}
 	
 	
